@@ -1,6 +1,7 @@
 package com.twoewe.api;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.twoewe.model.Clue;
 import com.twoewe.model.ClueRepo;
+import com.twoewe.model.ClueSummary;
 import com.twoewe.service.ClientMapper;
 
 @Controller
@@ -31,6 +33,13 @@ public class ClueController {
 		newEntry.setUri(uri);
 		newEntry.setClientName(mapper.map(uri));
 		repo.save(newEntry);
+	}
+	
+	
+	@RequestMapping(value="thisWeek", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ClueSummary> thisWeek() {
+		return repo.thisWeeksReport();
 	}
 	
 	
