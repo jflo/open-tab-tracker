@@ -38,8 +38,8 @@ public class ClueController {
 	
 	@RequestMapping(value="thisWeek", method = RequestMethod.GET)
 	@ResponseBody
-	public List<ClueSummary> thisWeek() {
-		return repo.thisWeeksReport();
+	public List<ClueSummary> thisWeek(String email) {
+		return repo.thisWeeksReportFor(email);
 	}
 	
 	

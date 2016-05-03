@@ -14,8 +14,8 @@ public interface ClueRepo extends CrudRepository<Clue, Long>{
 	//select client_name, (count(client_name) * 100 / (select count(*) from Clue)) as work from Clue where WEEK(accessed_at) = WEEK(SYSDATE())group By client_name;
 
 
-	@Query(value = "select users_email AS usersEmail, client_name AS clientName, WEEK(accessed_at) AS weekNumber, (count(client_name) * 100 / (select count(*) from Clue)) AS percentTimeSpent from Clue where WEEK(accessed_at) = WEEK(SYSDATE())group By users_email, client_name", nativeQuery = true)
-	public List<ClueSummary> thisWeeksReport();
+	@Query(value = "select *, (count(*) / (select count(*) from Clue c2 where c2.users_email = ?1 and c2.client_name = client_name))  from Clue where users_email = ?1 GROUP BY client_name", nativeQuery = true)
+	public List<ClueSummary> thisWeeksReportFor(String email);
 	
 	
 }
